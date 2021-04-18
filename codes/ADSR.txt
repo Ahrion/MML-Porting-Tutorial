@@ -1,0 +1,5 @@
+#instruments
+{
+	"harp 2.brr"	$BF $B0 $XX $YY $ZZ ; @30
+}
+		    $ED $3F $B0

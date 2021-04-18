@@ -1,0 +1,109 @@
+
+
+\section{Einführung}
+\subsection{Vorwort}
+Dieses Tutorial richtet sich hauptsächlich an Anfänger, die entweder noch keine Musik geportet haben oder gerade damit beginnen. Außerdem sollten einige Kapitel interessant für diejenigen sein, die zwar nicht vorhaben selber Musik zu porten, aber Musik in eigene Roms patchen möchten oder einfach nur wissen wollen, wie der allgemeine Ablauf des Portens aussieht.
+Die nötige Musiktheorie ist gering und wird in diesem Tutorial abgedeckt. Vorkenntnisse in diesem Bereich sind also keine Vorraussetzung.
+
+\newpage
+
+\subsection{Überblick}
+
+Musik Ports für den SNES schreiben wir in MML (Macro Musik Language). Das Audioformat des SNES heißt SPC, benannt nach dem in der Konsole verbauten Soundchip SPC700.
+Obwohl eine SPC Datei das Audioformat ist, wird diese nicht für das Patchen oder Porten von Musik benötigt. Unser Ziel ist es, ein Textdokument in MML zu erstellen, das wir letztendlich mit AddMusicK in eine ROM patchen.
+
+
+\subsection*{Allgemeiner Ablauf}
+Wenn wir einen Song porten wollen, gibt es verschiedene Möglichkeiten dies zu tun. Diese sind:
+\begin{itemize}
+	\item Einen Song vollständig in einer Textdatei in MML schreiben
+	\item Eine MIDI Datei bearbeiten/erstellen, mit einem Konverter in eine Textdatei mit MML Code konvertieren und Textdatei weiter bearbeiten
+	\item Eine SPC Datei mit einem Konverter in eine Textdatei mit MML Code konvertieren und Textdatei weiter bearbeiten
+\end{itemize}
+
+\medskip
+
+Die erste Methode ist verglichen zur zweiten aufwändiger und werden wir deshalb nur selten verwenden. Die dritte Methode ist eine Notlösung, da der bisher einzige SPC Konverter sehr unsauber konvertiert. Die zweite Methode ist die gängigste die wir am häufigsten benutzen werden. \\
+
+Zu Übungszwecken werden wir trotzdem im weiteren Verlauf einen kurzen Song vollständig im Texteditor schreiben.
+
+
+\subsection*{Einschränkungen}
+AddMusicK und der SPC700 Chip kommen nicht ohne Einschränkungen daher. Diese sollten wir kennen, bevor wir einen Song schreiben um zu verstehen, wie dieser auszusehen hat.
+
+\begin{itemize}
+	\item 8 Soundkanäle: Der SPC700 besitzt 8 Kanäle die wir belegen können. Diese werden in AddMusicK mit \#0 bis \#7 durchnummeriert. Pro Kanal kann maximal eine Note gleichzeitig gespielt werden, wodurch wir maximal 8 Noten zur selben Zeit im gesamten Song platzieren können.
+	\item Arbeitsspeicher: Der SPC700 besitzt 64kB Audio RAM. Ein Song muss vollständig in den Arbeitsspeicher geladen werden können.
+	\item Oktaven: AddMusicK verwendet einen Bereich von knapp 6 Oktaven, angefangen mit o1c (C Note der 1. Oktave) bis o6a (A Note der 6. Oktave). Wichtig hierbei ist nur der Bereich den wir verwenden können und nicht die maximale Oktave. Wir können nämlich jedes einzelne Instrument quasi beliebig im Pitch ändern (Pitch bis 16 kHz) und somit auch in niedrigen Oktavräumen akustisch hohe Noten spielen.
+	\item Auflösung: Die Zeitschritte sind quantisiert. Dies hat zur Folge, dass Noten und Pausen sowohl eine Mindestlänge besitzen als auch nur ein vielfaches dieser Mindestlänge lang sein und nur in einem festen Raster platziert werden können. Diese Mindestlänge nennt sich Tick.
+\end{itemize}
+
+\subsection{Musiktheorie und MML Code Analogie}
+
+Noten befinden sich in Oktavräumen. Eine Oktave besteht aus 12 Halbtönen die wie folgt angeordnet werden:
+C, C\#, D, D\#, E, F, F\#, G, G\#, A, A\#, B \\
+Der Wechsel um genau eine Oktave bedeutet eine Frequenzverdopplung bzw Frequenzhalbierung.
+In MML geben wir die Oktavlage mit o, gefolgt von einer Zahl an.
+So beschreibt z.B. o3 den dritten Oktavraum. \\
+
+Wird am Anfang des Kanals keine Oktave angegeben, wird diese von AddMusicK auf die vierte Oktave gelegt.
+
+\bigskip
+
+Eine Note besitzt eine Tonhöhe (z.B. C, D, E usw.) und einen Notenwert (ganze Note, halbe Note, Viertelnote usw.) der die Länge beschreibt.
+In MML wird eine Note gekennzeichnet, indem man zuerst die Tonhöhe, gefolgt von seiner Länge schreibt.
+c1 beschreibt ein C mit der Länge einer ganzen Note, ein e4 ist ein E mit der Länge einer Viertelnote. \\
+C\# D\# F\# G\# und A\# werden in MML mit einem + geschrieben, da \# für eine Vielzahl von Befehlen reserviert ist. c+8 ist also eine c\# Achtelnote.
+
+\bigskip
+
+Möchten wir eine Note beschreiben die eine andere Länge besitzt, können wir dies mit einem Punkt oder einer Tilde tun. (Eine weitere Möglichkeit ist das Gleichheitszeichen was einen Tick-Wert angibt, später dazu mehr) Eine Punktierte Note wird mit einem oder mehreren Punkten markiert. Jeder Punkt hinter einem Notenwert addiert den halben Notenwert dem vorherigen Notenwert dazu. \\
+Beispiel:
+
+\bigskip
+
+c1. hat die Länge 1 + 1/2 \\
+c1.. hat die Länge 1 + 1/2 + 1/4 \\
+c8... hat die Länge 1/8 + 1/16 + 1/32 + 1/64
+
+\bigskip
+
+Mit Punktierten Noten können aber nicht beliebige Längen dargestellt werden.
+Dafür können wir einen Haltebogen (\textasciicircum) verwenden. Dieser addiert alle darauf folgenden Notenwerte zusammen. \\
+Beispiel:
+
+\bigskip
+
+c1\textasciicircum4 hat die Länge 1 + 1/4 \\
+c2\textasciicircum4\textasciicircum16 hat die Länge 1/2 + 1/4 + 1/16
+
+\bigskip
+
+Wenn wir Triolen (Noten zur Basis 3) schreiben wollen, haben wir auch hier mehrere Möglichkeiten.
+Ohne Triolen könnten wir beispielsweise nicht mit 3 gleich langen Noten einen 4/4 Takt vollständig ausfüllen.
+Eine Möglichkeit ist den Notenwert als Zahl zu schreiben. \\
+Beispiel:
+
+\bigskip
+
+c6 c6 c6 c6 c6 c6 sind 6 Sechstelnoten, die zusammen eine ganze Note lang sind.
+
+\bigskip
+
+Noten, die in \{\} stehen, werden mit dem Wert 2/3 multipliziert, ähnlich wie eine Triole in der Musiktheorie beschrieben wird. Das vorherige Beispiel kann man auch schreiben als: \\
+\{c4 c4 c4 c4 c4 c4\} \\
+Aus den Viertelnoten werden so Sechstelnoten ($1/4 \cdot 2/3 = 1/6$)
+
+\bigskip
+
+Pausen werden mit einem r (Rest) gekennzeichnet, gefolgt von einer Länge
+
+\bigskip
+
+r1 ist eine Ganze Pause \\
+r4 ist eine Viertelpause \\
+r1\textasciicircum8 ist eine Pause Mit Länge 1 + 1/8 
+
+\bigskip
+
+Wird keine Länge für eine Note oder Pause angegeben, wird diese von AddMusicK als Länge 1 interpretiert.

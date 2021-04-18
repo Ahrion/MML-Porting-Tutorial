@@ -1,0 +1,201 @@
+\section{Instrumente und Samples}
+
+In diesem Kapitel wird erklärt, was der Unterschied zwischen so genannten sampled und unsampled Songs ist, wie einzelne Instrumente definiert werden, was Sample Groups sind und wie wir eigene Samples erstellen und einbinden können. \\
+Außerdem benötigen wir für das Kapitel folgende Programme:
+
+\medskip
+
+\begin{itemize}
+	\item split700
+	\item Audacity
+	\item OpenMPT
+	\item BRRPlayer
+	\item C700 VST Plugin (optional, da split700 in diesem Fall die gleiche Aufgabe übernimmt. Trotzdem beides empfohlen)
+\end{itemize}
+
+\medskip
+
+
+Unsampled Songs sind Songs, die ausschließlich Samples aus SMW benutzen. Ein Beispiel für ein unsampled Song ist der von uns erstellt Song aus Kapitel \ref{sec:ErstenSongSchreiben}. \\
+Von sampled Songs ist die Rede, sobald mindestens ein custom Sample (ein Sample, dass aus einem anderen Spiel kommt oder selbst erstellt wurde) für den Song verwendet wird. \\
+Unsampled Songs klingen oft nach SMW und haben den Vorteil, dass sie nur wenig Platz im Audio RAM einnehmen. Dafür ist man jedoch stark eingeschränkt in der Instrumentauswahl. Sampled Songs haben dieses Problem nicht, können aber schnell den gesamten Arbeitsspeicher belegen, weswegen besonders auf den Speicherplatz geachtet werden muss.
+
+\subsection{Custom Samples}
+
+Der SPC700 arbeitet mit so genannten .brr Samples (Bit Rate Reduction). Es gibt verschiedene Möglichkeiten an diese Samples zu gelangen:
+
+\medskip
+
+\begin{itemize}
+	\item Ein Sample Pack herunterladen
+	\item Samples aus einer SPC Datei extrahieren, z.B. mit split700, dem C700 Plugin oder SPC2MML
+	\item Ein Sample aus einer .wav Datei selbst erstellen 
+\end{itemize}
+
+\medskip
+
+Ein sehr umfangreiches Sample Pack ist samples of insanity von musicalman. Es ist hier verfügbar:
+\href{https://bin.smwcentral.net/u/29022/soi-2019-07-12.zip}{https://bin.smwcentral.net/u/29022/soi-2019-07-12.zip}
+
+\bigskip
+
+Sollen Custom Samples für einen Song verwendet werden, müssen sich diese in einem Unterverzeichnis von AddmusicK/samples/ liegen. Am besten legt man für jeden Song einen eigenen Ordner für Samples an. Mit dem Spezial Befehl \#path weiß AddMusicK, in welchem Verzeichnis Samples gesucht werden sollen. \\
+Wir fügen am Beispiel unseres Songs aus Kapitel \ref{sec:ErstenSongSchreiben} ein Custom Sample ein. Als erstes erstellen wir einen Ordner mit dem Namen \textit{Prelude} in AddmusicK/samples/. Danach kopieren wir uns das Sample Harp 2.brr, welches in samples of insanity/individual samples/other liegt und fügen es in den von uns zuvor erstellten Ordner \textit{Prelude} ein. Außerdem öffnen wir das beiliegende Textdokument \textit{!patterns.txt} worauf wir gleich noch zurückgreifen werden. \\
+Jetzt öffnen wir wieder unseren Song und geben den Pfad mit \#path  \dq Prelude\dq{} an. Danach bestimmen wir mit \#samples\{\}, welche Samples aus dem Ordner benutzt werden sollen. Wir tragen neben dem Samplenamen noch eine Samplegroup ein die wir verwenden möchten, was entweder die Samplegroup \#default oder \#optimized ist, falls wir keine eigene erstellen. \\
+AddMusicK legt im Hintergrund die Samplegroup \#default automatisch an wenn kein \#Samples\{\} Block vorhanden ist, weswegen wir bisher keine Samplegroup selber anlegen mussten.
+
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=1, lastline=9]{codes/Samples.txt}
+
+\medskip
+
+Als letztes definieren wir uns das neue Instrument. Wir ersetzen dafür das alte Instrument an die Position @30, indem  die gesamte Zeile gelöscht wird und dafür der Samplename plus den ersten 5 Hexwerten aus  \textit{!patterns.txt} die hinter  \textit{harp 2.brr} stehen. \\
+Der Anfang des Songs sollte nun wie folgt aussehen:
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=1, lastline=17]{codes/Samples.txt}
+
+\medskip
+
+
+\subsection{Instrumente definieren}
+
+Möglicherweise möchten wir ein Instrument in seinen Eigenschaften ändern oder haben gar keine Standardwerte, weil wir das Sample beispielsweise selbst erstellt haben. Was es mit den einzelnen Hexwerten auf sich hat wird im Folgenden erklärt.\\
+
+\medskip
+ 
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=13, lastline=13]{codes/Samples.txt}
+ 
+\medskip
+
+Als erstes wird entweder die Nummer des SMW Samples oder der Custom Sample Name angegeben, der definiert werden soll.
+Danach beschreiben die Hexwerte der Reihe nach: \\
+Attack und Decay (AD), Sustain und Release (SR), Gain, Pitch, Fine Pitch.
+
+\bigskip
+
+ADSR und Gain beschreiben die Hüllkurve bzw. Anschlags- und Abklingverhalten des Instruments, wobei immer nur ADSR oder Gain gleichzeitig aktiv ist. Es ist aber möglich, mit weiteren Befehlen zwischen ADSR und Gain zu wechseln und auch die  Werte zu verändern. \\
+Mit Pitch und Fine Pitch stimmen wir das Instrument auf den richtigen Pitch, ähnlich wie eine Gitarre. Soll das Instrument um eine Oktave vergrößert oder verkleinert werden, müssen Pitch und Fine Pitch verdoppelt bzw. halbiert werden.
+
+
+\subsubsection{ADSR}
+
+Allgemein lassen sich verschiedene Parameter mit ADSR ansteuern, im Falle von AddMusicK allerdings nur der Verlauf der Lautstärke. Außerdem ist ADSR in AddMusicK leicht anders definiert als üblich. Das kommt daher, dass es beim SPC700 kein echtes Release Event gibt. Zwar gibt es so genannte Off Keying Events (immer wenn eine Note endet), diese lösen aber nicht das herkömmliche Release Event aus, weil das Instrument sofort aufhört zu spielen, sobald das Off Keying Event eintritt. (Es gibt allerdings die Möglichkeit, ein künstliches Release Event nach Ende einer Note selbst zu erzeugen)
+
+\bigskip
+
+Die 4 Parameter beschreiben hier folgende Eigenschaften:
+
+\medskip
+
+\begin{itemize}
+	\item \textbf{Attack (Anstieg)} -- gibt die Dauer an, bis die Lautstärke das Maximum erreicht hat.
+	\item \textbf{Decay (Abfall)} -- gibt die Dauer an, die zwischen Maximum und Sustain Wert liegt.
+	\item \textbf{Sustain (Halten)} -- gibt das Verhältnis zwischen abfallenden Wert nach der Decay Dauer und dem Maximum an.
+	\item \textbf{Release (Loslassen)} -- gibt die Dauer an, bis die Lautstärke 0 erreicht.
+\end{itemize}
+
+
+\bigskip
+
+\begin{figure}[htbp] \centering
+	\includegraphics[width=.95\linewidth]{images/ADSR.png}
+	\caption{ADSR}
+	\label{ADSR}
+\end{figure}
+
+
+\begin{tabularx}{\textwidth}{|l|X|X|X|X|X|}
+	\hline
+	Wert & Attack (Sek.) & Decay (Sek.)  & Sustain (Verhältnis) & Release (Sek.) Wert $\leq$ F & Release (Sek.) Wert $>$ F \\
+
+	\hline
+	00 & 4.1 & 1.2 (\$ED) & 1/8 & Unendlich & 1.2\\
+	\hline
+	01 & 2.6 & 0.74 (\$ED) & 1/8 & 38 & 0.88 \\
+	\hline
+	02 & 1.5 & 0.44 (\$ED) & 2/8 & 28 & 0.74 \\
+	\hline
+	03 & 1.0 & 0.29 (\$ED) & 2/8 & 24 & 0.59 \\
+	\hline
+	04 & 0.64 & 0.18 (\$ED) & 3/8 & 19 & 0.44 \\
+	\hline
+	05 & 0.38 & 0.11 (\$ED) & 3/8 & 14 & 0.37 \\
+	\hline
+	06 & 0.26 & 0.074 (\$ED) & 4/8 & 12 & 0.29 \\
+	\hline
+	07 & 0.16 & 0.037 (\$ED) & 4/8 & 9.4 & 0.22 \\
+	\hline
+	08 & 0.096 & 1.2 & 5/8 & 7.1 & 0.18 \\
+	\hline
+	09 & 0.064 & 0.74 & 5/8 & 5.9 & 0.15 \\
+	\hline
+	0A & 0.04 & 0.44 & 6/8 & 4.7 & 0.11 \\
+	\hline
+	0B & 0.024 & 0.29 & 6/8 & 3.5 & 0.092 \\
+	\hline
+	0C & 0.016 & 0.18 & 7/8 & 2.9 & 0.074 \\
+	\hline
+	0D & 0.01 & 0.11 & 7/8 & 2.4 & 0.055 \\
+	\hline
+	0E & 0.006 & 0.074 & 1 & 1.8 & 0.037 \\
+	\hline
+	0F & 0 & 0.037 & 1 & 1.5 & 0.018 \\
+	\hline
+\end{tabularx}
+
+\bigskip
+
+Die Tabelle und die beiden unterschiedlichen Befehle zur ADSR Beschreibung benötigt eine genauere Erklärung. Diese erfolgt am Beispiel unseres Custom Instruments.
+
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=1, lastline=5]{codes/ADSR.txt}
+
+\medskip
+
+Beide Befehle beschreiben die gleichen ADSR Werte. Als erstes sei gesagt, dass die Reihenfolge der ADSR Werte nicht \$AD \$SR, sondern \$DA \$SR entspricht. \\
+Als nächstes fällt auf, dass sich der Decay Wert unterscheidet. Der Decay Wert in \#instruments\{\} muss immer um 8 aufaddiert werden. \\
+Sustain und Release Werte hängen voneinander ab. In diesem Beispiel ist die Release Dauer nicht unendlich, obwohl der Release Wert auf 0 steht. Für eine Release Dauer von unendlich muss der Sustain Wert immer eine gerade Zahl sein. Hier müsste der Sustain Wert auf A gesetzt werden, damit das Sustain Verhältnis gleich bleibt, die Release Dauer aber unendlich beträgt. \\
+Falls \$DA in \#instruments\{\} kleiner als \$80 ist, wird automatisch Gain aktiviert. Genauso wird Gain aktiviert, falls im \$ED Befehl der \$DA Wert $\geq 80$ ist.
+
+\bigskip
+
+Das Instrument wird durch ADSR wie folgt beschrieben: \\
+\textbf{Attack:} 0 Sek. \\
+\textbf{Decay:} 0.29 Sek. \\
+\textbf{Sustain:} 6/8 vom Maximum \\
+\textbf{Release:} 1.2 Sek.
+
+
+
+\subsubsection{Gain}
+
+Neben ADSR kann ein Instrument auch durch Gain beschrieben werden. Wie bei ADSR gibt es zwei Möglichkeiten, Gain zu definieren. Zum einen durch das dritte Argument in \#instruments\{\} (wird dort aber nur aktiv, falls \$DA in \#instruments\{\} kleiner als \$80 ist), zum anderen durch die Hexbefehl \$FA \$01 \$XX oder \$ED \$80+ \$XX. \\
+Gain beschreibt keine vollständige Hüllkurve sondern nur das Anschlag- oder Abklingverhalten eines Instruments. Im Vergleich zu ADSR bietet Gain allerdings auch exponentielle Verläufe an, wohingegen durch ADSR nur lineare Verläufe möglich sind. \\
+Gain bietet fünf verschiedene Modi an:
+
+\medskip
+
+\begin{itemize}
+	\item \textbf{Direct}
+	\item \textbf{Decrease}
+	\item \textbf{Exponential Decrease}
+	\item \textbf{Increase}
+	\item \textbf{Bent Line Increase}
+\end{itemize}
+
+\medskip
+
+Decrease und Exponential Decrease werden nur wirksam, wenn sie während einer gespielten Note aktiviert wird. Dies können wir mittels Haltebogen erreichen.
+
+\bigskip
+
+%Die geänderten ADSR Werte durch \$ED bzw. Gain Wert durch \$FA \$01 oder \$ED werden mit erneutem Aufrufen des Instruments (@) wieder zurückgesetzt
+
+\subsection{Sample Groups}
+\subsection{Eigene Samples erstellen}

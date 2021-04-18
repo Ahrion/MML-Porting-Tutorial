@@ -1,0 +1,11 @@
+#amk 2
+
+t32
+w200
+
+#0
+o2 l16
+
+; Notenfolge A (Takt 1 + 2)
+c d e g > c d e g > c d e g > c d e g
+> c < g e d c < g e d c < g e d c < g e d

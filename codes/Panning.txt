@@ -1,0 +1,35 @@
+#amk 2
+
+t32
+w200
+
+#0
+o2 l16 y15
+[[
+[
+; Notenfolge A (Takt 1 + 2 + 5 + 6)
+$DC $C0 $05 c d e g > c d e g > c d e g > c d e g
+$DC $C0 $0F > c < g e d c < g e d c < g e d c < g e d
+
+; Notenfolge B (Takt 3 + 4 + 7 + 8)
+$DC $C0 $05 < a b > c e a b > c e a b > c e a b > c e
+$DC $C0 $0F a e c < b a e c < b a e c < b a e c < b
+]2
+
+; Notenfolge C (Takt 9 + 10)
+$DC $C0 $05 a > c f g a > c f g a > c f g a > c f g
+$DC $C0 $0F a g f c < a g f c < a g f c < a g f c
+
+; Notenfolge D (Takt 11 + 12)
+$DC $C0 $05 < b > d g a b > d g a b > d g a b > d g a
+$DC $C0 $0F b a g d < b a g d < b a g d < b a g d
+
+; Notenfolge E (Takt 13 + 14)
+$DC $C0 $05 < g+ > c d+ g g+ > c d+ g g+ > c d+ g g+
+	    > c d+ g
+$DC $C0 $0F g+ g d+ c < g+ g d+ c < g+ g d+ c < g+ g d+ c
+
+; Notenfolge F (Takt 15 + 16)
+$DC $C0 $05 < a+ > d f a a+ > d f a a+ > d f a a+ > d f a
+$DC $C0 $0F a+ a f d < a+ a f d < a+ a f d < a+ a f d
+]]3

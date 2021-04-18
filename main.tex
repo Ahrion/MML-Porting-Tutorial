@@ -1,0 +1,70 @@
+\documentclass[12pt, a4paper]{article}
+
+
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ngerman}
+
+
+\usepackage{tabularx}
+
+
+\parindent 0pt
+
+% Seitenformat festlegen
+\usepackage{geometry}
+\geometry{a4paper, top=25mm, left=35mm, right=25mm, bottom=20mm, headheight=15mm, headsep=10mm, footskip=12mm}
+
+\usepackage{nameref}
+\usepackage{graphicx}
+\usepackage[update,prepend]{epstopdf}
+\usepackage[squaren]{SIunits}
+\usepackage{icomma}
+\usepackage{here}
+\usepackage{listings}
+\usepackage{color}
+
+\usepackage{hyperref}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textit{ {\leftmark}}}
+\fancyfoot[C]{\thepage}
+
+\usepackage{acronym}
+
+\parindent 0pt
+
+
+
+ 
+
+\begin{document}
+
+
+
+
+\newpage
+
+\input{titlepage.tex}
+
+{
+	\tableofcontents{}
+}
+\newpage
+\input{Einfuehrung}
+\input{ErsterSong}
+\newpage
+\input{Konverter}
+\input{Instrumente}
+\input{Hex}
+\input{Standard}
+\input{GlobalSongs}
+\include{FAQ}
+\include{Anhang}
+
+\end{document}
