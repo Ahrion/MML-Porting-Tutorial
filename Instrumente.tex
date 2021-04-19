@@ -111,7 +111,6 @@ Die 4 Parameter beschreiben hier folgende Eigenschaften:
 \begin{tabularx}{\textwidth}{|l|X|X|X|X|X|}
 	\hline
 	Wert & Attack (Sek.) & Decay (Sek.)  & Sustain (Verhältnis) & Release (Sek.) Wert $\leq$ F & Release (Sek.) Wert $>$ F \\
-
 	\hline
 	00 & 4.1 & 1.2 (\$ED) & 1/8 & Unendlich & 1.2\\
 	\hline
@@ -189,13 +188,97 @@ Gain bietet fünf verschiedene Modi an:
 	\item \textbf{Bent Line Increase}
 \end{itemize}
 
+
+\bigskip
+
+Bei Gain Werten zwischen 00 bis 7F ist der Modus Direct aktiv (direkter Anschlag).
+Die weiteren Modi inklusive Anstiegs- und Abklingszeiten stehen in der folgenden Tabelle:
+
+\bigskip
+
+\begin{tabularx}{\textwidth}{|X|X|}
+	\hline
+	Zeit von Wert 7F bis 0: & Zeit von Wert 0 bis 7F: \\
+	\hline
+\end{tabularx}
+
+\begin{tabularx}{\textwidth}{|l|X|l|X|l|X|l|X|}
+	\hline
+	Wert & Decrease & Wert & Exp Decrease & Wert & Increase & Wert & Bent Line Increase \\
+	\hline
+	80 & Infinite & A0 & Infinite & C0 & Infinite & E0 & Infinite \\
+	\hline
+	81 & 4.1 s & A1 & 38 s & C1 & 4.1 s & E0 & 7.2 s \\
+	\hline
+	82 & 3.1 s & A2 & 28 s & C2 & 3.1 s & E2 & 5.4 s \\
+	\hline
+	83 & 2.6 s & A3 & 24 s & C3 & 2.6 s & E3 & 4.6 s \\
+	\hline
+	84 & 2.0 s & A4 & 19 s & C4 & 2.0 s & E4 & 3.5 s \\
+	\hline
+	85 & 1.5 s & A5 & 14 s & C5 & 1.5 s & E5 & 2.6 s \\
+	\hline
+	86 & 1.3 s & A6 & 12 s & C6 & 1.3 s & E6 & 2.3 s \\
+	\hline
+	87 & 1.0 s & A7 & 9.4 s & C7 & 1.0 s & E7 & 1.8 s \\
+	\hline
+	88 & 770 ms & A8 & 7.1 s & C8 & 770 ms & E8 & 1.3 s \\
+	\hline
+	89 & 640 ms & A9 & 5.9 s & C9 & 640 ms & E9 & 1.1 s \\
+	\hline
+	8A & 510 ms & AA & 4.7 s & CA & 510 ms & EA & 900 ms \\
+	\hline
+	8B & 380 ms & AB & 3.5 s & CB & 380 ms & EB & 670 ms \\
+	\hline
+	8C & 320 ms & AC & 2.9 s & CC & 320 ms & EC & 560 ms \\
+	\hline
+	8D & 260 ms & AD & 2.4 s & CD & 260 ms & ED & 450 ms \\
+	\hline
+	8E & 190 ms & AE & 1.8 s & CE & 190 ms & EE & 340 ms \\
+	\hline
+	8F & 160 ms & AF & 1.5 s & CF & 160 ms & EF & 280 ms \\
+	\hline
+	90 & 130 ms & B0 & 1.2 s & D0 & 130 ms & F0 & 220 ms \\
+	\hline
+	91 & 96 ms & B1 & 880 ms & D1 & 96 ms & F1 & 170 ms \\
+	\hline
+	92 & 80 ms & B2 & 740 ms & D2 & 80 ms & F2 & 140 ms \\
+	\hline
+	93 & 64 ms & B3 & 590 ms & D3 & 64 ms & F3 & 110 ms \\
+	\hline
+	94 & 48 ms & B4 & 440 ms & D4 & 48 ms & F4 & 84 ms \\
+	\hline
+	95 & 40 ms & B5 & 370 ms & D5 & 40 ms & F5 & 70 ms \\
+	\hline
+	96 & 32 ms & B6 & 290 ms & D6 & 32 ms & F6 & 56 ms \\
+	\hline
+	97 & 24 ms & B7 & 220 ms & D7 & 24 ms & F7 & 42 ms \\
+	\hline
+	98 & 20 ms & B8 & 180 ms & D8 & 20 ms & F8 & 35 ms \\
+	\hline
+	99 & 16 ms & B9 & 150 ms & D9 & 16 ms & F9 & 28 ms \\
+	\hline
+	9A & 12 ms & BA & 110 ms & DA & 12 ms & FA & 21 ms \\
+	\hline
+	9B & 10 ms & BB & 92 ms & DB & 10 ms & FB & 18 ms \\
+	\hline
+	9C & 8 ms & BC & 74 ms & DC & 8 ms & FC & 14 ms \\
+	\hline
+	9D & 6 ms & BD & 55 ms & DD & 6 ms & FD & 11 ms \\
+	\hline
+	9E & 4 ms & BE & 37 ms & DE & 4 ms & FE & 7 ms \\
+	\hline
+	9F & 2 ms & BF & 18 ms & DF & 2 ms & FF & 3.5 ms \\
+	\hline
+\end{tabularx}
+
 \medskip
 
 Decrease und Exponential Decrease werden nur wirksam, wenn sie während einer gespielten Note aktiviert wird. Dies können wir mittels Haltebogen erreichen.
 
 \bigskip
 
-%Die geänderten ADSR Werte durch \$ED bzw. Gain Wert durch \$FA \$01 oder \$ED werden mit erneutem Aufrufen des Instruments (@) wieder zurückgesetzt
+Die geänderten ADSR Werte durch \$ED bzw. Gain Wert durch \$FA \$01 oder \$ED werden mit erneutem Aufrufen des Instruments (@) wieder zurückgesetzt.
 
 \subsection{Sample Groups}
 \subsection{Eigene Samples erstellen}
