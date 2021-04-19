@@ -196,6 +196,7 @@ Die weiteren Modi inklusive Anstiegs- und Abklingszeiten stehen in der folgenden
 
 \bigskip
 
+\begin{table}[htbp]
 \begin{tabularx}{\textwidth}{|X|X|}
 	\hline
 	Zeit von Wert 7F bis 0: & Zeit von Wert 0 bis 7F: \\
@@ -271,10 +272,48 @@ Die weiteren Modi inklusive Anstiegs- und Abklingszeiten stehen in der folgenden
 	9F & 2 ms & BF & 18 ms & DF & 2 ms & FF & 3.5 ms \\
 	\hline
 \end{tabularx}
+\caption{Gain Table von ggamer77}
+\end{table}
 
 \medskip
 
 Decrease und Exponential Decrease werden nur wirksam, wenn sie während einer gespielten Note aktiviert wird. Dies können wir mittels Haltebogen erreichen.
+
+\bigskip
+
+Im SPC700 Player werden die einzelnen Modi wie folgt angezeigt: 
+
+\bigskip
+
+\begin{tabularx}{\textwidth}{l l}
+Direct & 
+\textcolor{blue}{Ga}
+\textcolor{red}{D}
+- -
+\\
+Decrease & 
+\textcolor{blue}{Ga}
+\textcolor{green}{A}
+0 0
+\\
+Exponential Decrease & 
+\textcolor{blue}{Ga}
+\textcolor{green}{A}
+0
+\textcolor{red}{1}
+\\
+Increase &
+\textcolor{blue}{Ga}
+\textcolor{green}{A}
+\textcolor{red}{1}
+0
+\\
+Bent Line Increase &
+\textcolor{blue}{Ga}
+\textcolor{green}{A}
+\textcolor{red}{1}
+\textcolor{red}{1}
+\end{tabularx}
 
 \bigskip
 
