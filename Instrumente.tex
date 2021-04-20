@@ -335,7 +335,7 @@ Stattdessen werden Custom Samples die im \#samples\{\} Block liegen verwendet. S
 \bigskip
 
 Bei der Samplegroup \#default handelt es sich um die original SMW Samples, die Samples aus \#optimized beinhalten nur die Hälfte der Informationen, wodurch diese auch nur halb so groß sind.
-Der Informationsverlust bedeutet eine geringere Soundqualität, diese ist aber kaum wahrnehmbar. Die Wahl der Sample Group hängt also nur davon ab, wie viel freien Speicher noch im Arbeitsspeicher vorhanden ist.
+Der Informationsverlust bedeutet eine geringere Soundqualität, diese ist aber kaum wahrnehmbar. Die Wahl der Sample Group hängt also nur davon ab, wie viel freier Speicher noch im Arbeitsspeicher vorhanden ist.
 
 \subsubsection*{Custom Sample Groups}
 
@@ -348,6 +348,6 @@ In \textit{Addmusic\_sample groups.txt} werden alle Sample Groups definiert. Zwe
 Zum anderen stehen hinter den Samples @14, @17 und @21 keine Ausrufezeichen. Ein Ausrufezeichen hinter einem Samplenamen bewirkt, dass diese global (also dauerhaft) geladen sind, solange die Sample Group verwendet wird. Die Samples @14, @17 und @21 sind die einzigen Samples, die weder für Global Songs, noch Soundeffekte und ausschließlich für einige Local Songs verwendet werden und daher nicht global geladen werden müssen. \\
 Unter \href{https://www.smwcentral.net/?p=viewthread\&t=97787}{https://www.smwcentral.net/?p=viewthread\&t=97787} ist eine vollständige Liste, welche Sample für welche Soundeffekte und Global Songs verwendet werden. \\
 Die populärsten Samples die durch \textit{EMPTY.brr} ersetzt werden sind \textit{12 SMW @15.brr} (wird nur für Yoshi Sound verwendet), \textit{09 SMW @7.brr} (wird nur für den Global Song Bonus End verwendet) und \textit{13 SMW Thunder.brr}. Eine Sample Group ohne \textit{12 SMW @15.brr} wäre daher nicht kompatibel mit Leveln, die Yoshi benutzen, weswegen immer darauf hingewiesen werden muss, welche Sounds oder Global Songs nicht mehr funktionieren. \\
-Falls eine neue Sample Group angelegt werden soll, kopiert man dafür am einfachsten die Sample Group \#optimized aus \textit{Addmusic\_sample groups.txt}, fügt diese im Textdokument ein mit einem anderen Namen als optimized und ersetzt Samples, die nicht verwendet werden sollen durch \textit{\dq EMPTY.brr\dq{}!}.
+Falls eine neue Sample Group angelegt werden soll, kopiert man dafür am einfachsten die Sample Group \#optimized aus \textit{Addmusic\_sample groups.txt}, fügt diese im Textdokument ein mit einem anderen Namen als optimized und ersetzt Samples, die nicht verwendet werden sollen durch \textit{\dq EMPTY.brr\dq{}!}. Im Song selbst wird die Sample Group schließlich mit \#SampleGroupName geladen.
 
 \subsection{Eigene Samples erstellen}
