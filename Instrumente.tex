@@ -148,7 +148,7 @@ Die 4 Parameter beschreiben hier folgende Eigenschaften:
 
 \bigskip
 
-Die Tabelle und die beiden unterschiedlichen Befehle zur ADSR Beschreibung benötigt eine genauere Erklärung. Diese erfolgt am Beispiel unseres Custom Instruments.
+Die Tabelle und die beiden unterschiedlichen Befehle zur ADSR Beschreibung benötigen eine genauere Erklärung. Diese erfolgt am Beispiel unseres Custom Instruments.
 
 
 \medskip
@@ -174,9 +174,9 @@ Das Instrument wird durch ADSR wie folgt beschrieben: \\
 
 \subsubsection{Gain}
 
-Neben ADSR kann ein Instrument auch durch Gain beschrieben werden. Wie bei ADSR gibt es zwei Möglichkeiten, Gain zu definieren. Zum einen durch das dritte Argument in \#instruments\{\} (wird dort aber nur aktiv, falls \$DA in \#instruments\{\} kleiner als \$80 ist), zum anderen durch die Hexbefehl \$FA \$01 \$XX oder \$ED \$80+ \$XX. \\
+Neben ADSR kann ein Instrument auch durch Gain beschrieben werden. Wie bei ADSR gibt es zwei Möglichkeiten, Gain zu definieren. Zum einen durch das dritte Argument in \#instruments\{\} (wird dort aber nur aktiv, falls \$DA in \#instruments\{\} kleiner als \$80 ist), zum anderen durch die Hexbefehle \$FA \$01 \$XX oder \$ED \$80+ \$XX. \\
 Gain beschreibt keine vollständige Hüllkurve sondern nur das Anschlag- oder Abklingverhalten eines Instruments. Im Vergleich zu ADSR bietet Gain allerdings auch exponentielle Verläufe an, wohingegen durch ADSR nur lineare Verläufe möglich sind. \\
-Gain bietet fünf verschiedene Modi an:
+Es gibt fünf verschiedene Gain Modi:
 
 \medskip
 
@@ -207,7 +207,7 @@ Die weiteren Modi inklusive Anstiegs- und Abklingszeiten stehen in der folgenden
 	\hline
 	Wert & Decrease & Wert & Exp Decrease & Wert & Increase & Wert & Bent Line Increase \\
 	\hline
-	80 & Infinite & A0 & Infinite & C0 & Infinite & E0 & Infinite \\
+	80 & Unendlich & A0 & Unendlich & C0 & Unendlich & E0 & Unendlich \\
 	\hline
 	81 & 4.1 s & A1 & 38 s & C1 & 4.1 s & E0 & 7.2 s \\
 	\hline
@@ -320,4 +320,34 @@ Bent Line Increase &
 Die geänderten ADSR Werte durch \$ED bzw. Gain Wert durch \$FA \$01 oder \$ED werden mit erneutem Aufrufen des Instruments (@) wieder zurückgesetzt.
 
 \subsection{Sample Groups}
+
+Wer bereits häufiger Musik in eine Rom gepatcht oder sampled Songs selbst geschrieben hat, wird wahrscheinlich schon auf Sample Groups gestoßen sein. \\
+Sample Groups sind -- wie der Name schon vermuten lässt -- eine vordefinierte Gruppe an Samples. AddMusicK stellt die Sample Groups \#default und \#optimized zur Verfügung. Diese beinhalten alle SMW Samples, die für Local Songs (normale Hintergrundmusik), Global Songs (Hintergrundmusik, die in allen Leveln geladen sind, z.B. Stage Clear oder P-Block) und Soundeffekte verwendet werden.
+Sie befinden sich in \textit{samples/default/} bzw. \textit{samples/optimized/}.
+
+\bigskip
+
+Sofern kein \#samples\{\} Block verwendet wird, setzt AddMusicK versteckt die Sample Group \#default. Sobald \#samples\{\} benutzt wird, muss eine Sample Group gesetzt werden.
+Ohne Sample Group wird nur das Standardinstrument @0 geladen, alle anderen SMW Samples können dann nicht mehr verwendet werden. \\
+In eine Rom gepatcht hat dies außerdem zur Folge, dass weder Global Songs noch Soundeffekte richtig abgespielt werden. Das liegt daran, dass jeder Soundeffekt in SMW aus den gleichen Samples erzeugt werden, die auch für die Musikinstrumente benutzt werden.
+Stattdessen werden Custom Samples die im \#samples\{\} Block liegen verwendet. Sobald ein sampled Song geschrieben wird, muss also eine Sample Group gesetzt werden.
+
+\bigskip
+
+Bei der Samplegroup \#default handelt es sich um die original SMW Samples, die Samples aus \#optimized beinhalten nur die Hälfte der Informationen, wodurch diese auch nur halb so groß sind.
+Der Informationsverlust bedeutet eine geringere Soundqualität, diese ist aber kaum wahrnehmbar. Die Wahl der Sample Group hängt also nur davon ab, wie viel freien Speicher noch im Arbeitsspeicher vorhanden ist.
+
+\subsubsection*{Custom Sample Groups}
+
+Es ist auch möglich eine eigene Sample Group anzulegen. Hauptmotivation ist, etwas Arbeitsspeicher einzusparen, indem einzelne Samples aus der Sample Group durch die Datei \textit{EMPTY.brr} ersetzt werden. Dabei handelt es sich um ein Sample ohne Informationen und dient nur als Platzhalter, damit alle anderen Samples ihre richtige Position in der Liste beibehalten.
+
+\bigskip
+
+In \textit{Addmusic\_sample groups.txt} werden alle Sample Groups definiert. Zwei Dinge fallen auf: Zum einen scheint es, als würden Samples fehlen. Die Samples @11, @16, @18, @19, @20, @23 - @28 sind jedoch nur Samples aus der Liste, die nur andere ADSR Einstellungen besitzen. \\
+
+Zum anderen stehen hinter den Samples @14, @17 und @21 keine Ausrufezeichen. Ein Ausrufezeichen hinter einem Samplenamen bewirkt, dass diese global (also dauerhaft) geladen sind, solange die Sample Group verwendet wird. Die Samples @14, @17 und @21 sind die einzigen Samples, die weder für Global Songs, noch Soundeffekte und ausschließlich für einige Local Songs verwendet werden und daher nicht global geladen werden müssen. \\
+Unter \href{https://www.smwcentral.net/?p=viewthread\&t=97787}{https://www.smwcentral.net/?p=viewthread\&t=97787} ist eine vollständige Liste, welche Sample für welche Soundeffekte und Global Songs verwendet werden. \\
+Die populärsten Samples die durch \textit{EMPTY.brr} ersetzt werden sind \textit{12 SMW @15.brr} (wird nur für Yoshi Sound verwendet), \textit{09 SMW @7.brr} (wird nur für den Global Song Bonus End verwendet) und \textit{13 SMW Thunder.brr}. Eine Sample Group ohne \textit{12 SMW @15.brr} wäre daher nicht kompatibel mit Leveln, die Yoshi benutzen, weswegen immer darauf hingewiesen werden muss, welche Sounds oder Global Songs nicht mehr funktionieren. \\
+Falls eine neue Sample Group angelegt werden soll, kopiert man dafür am einfachsten die Sample Group \#optimized aus \textit{Addmusic\_sample groups.txt}, fügt diese im Textdokument ein mit einem anderen Namen als optimized und ersetzt Samples, die nicht verwendet werden sollen durch \textit{\dq EMPTY.brr\dq{}!}.
+
 \subsection{Eigene Samples erstellen}
