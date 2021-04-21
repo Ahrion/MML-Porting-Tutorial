@@ -1,6 +1,29 @@
 \section{Ticks, Song Stats und Hexbefehle}
 
+Dieses Kapitel beschäftigt sich rund um das Thema Hexwerte und Hexbefehle. Es werden die meisten, aber nicht alle Hexbefehle vorgestellt, es handelt sich hierbei jedoch um die wichtigsten. \\
+Unter \textit{AddmusicK/readme\_files/hex\_command\_reference.html} befindet sich eine volsltändige Liste aller Hexbefehle.
+
 \subsection{Ticks}
+
+Songs die wir mit AddMusicK schreiben sind in Notenwerten, Pausen und Events zeitlich quantisiert.
+Die Auflösung beträgt 48 PPQ (pulses per quarter note, deutsch Impulse pro Viertelnote) bzw. 48 TPQN (ticks per quarter note, deutsch Ticks pro Viertelnote). In FL Studio kann der PPQ Wert unter \textit{Options/Project General Settings} eingestellt werden.\\
+Der kleinste zeitliche Schritt -- unabhängig vom Tempo -- ist 1 Tick. Dieser hat die Länge einer 192stel Note. Zwischen klassischen Notenwerten und Tick Werten kann also über das Verhältnis 192/Notenwert umgerechnet werden. Anstatt einem Notenwert hinter einer Note oder Pause kann mit einem Gleichheitszeichen = ein Tick Wert angegeben werden. Beispiel:
+
+\bigskip
+
+c2 $ \equiv $ c=96 (Rechnung: $ \dfrac{192}{c2} $)\\
+r4\textasciicircum16 $ \equiv $ r=60 (Rechnung: $ \dfrac{192}{r4} +  \dfrac{192}{r16} $)\\
+
+\bigskip
+
+Die Auflösung von 48 PPQ hat zwei Dinge zur Folge: Unsere kleinste Note ist eine 192stel Note, eine 256stel Note ist daher nicht möglich darzustellen. Außerdem wird beispielsweise eine 128stel Note nicht richtig aufgelöst, da diese bei 48 PPQ 1.5 Ticks lang ist $(\dfrac{192}{128} = 1.5$). Stattdessen wir eine 128stel Note auf 1 Tick abgeschnitten, was wiederum einer 192stel Note entspricht. \\
+Tick Werte treffen wir oft in Dateien an, die mit einem SPC/MML Konverter konvertiert wurden. Für extrem kurze Noten, beispielsweise um einen Swing Rhytmus zu erzeugen, können Tick Werte intuitiver sein als die klassischen Notenwerte.
+
+\bigskip
+
+Am häufigsten jedoch benutzen wir Tick Werte in Hexbefehlen. Sobald eine Dauer für einen Hexbefehl angeben wird, ist dieser ein Tick Wert als Hexzahl ausgedrückt. Am Beispiel unseres Panning Befehls aus Kapitel \ref{sec:ErstenSongSchreiben} sehen wir, dass bei \$DC \$C0 \$05 die Länge \$C0 als Dezimalzahl 192 entspricht, was als Tick Wert wiederum einer ganzen Note ist. \\
+Alternativ befindet sich im Anhang eine Tabelle mit einigen Längen die als Hexwerte dargestellt sind.
+
 \subsection{Stats}
 \subsection{Hexbefehle}
 \subsubsection{Pan Fading}
