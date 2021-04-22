@@ -6,11 +6,10 @@ Außerdem benötigen wir für das Kapitel folgende Programme:
 \medskip
 
 \begin{itemize}
-	\item split700
 	\item Audacity
 	\item OpenMPT
-	\item BRRPlayer
-	\item C700 VST Plugin (optional, da split700 in diesem Fall die gleiche Aufgabe übernimmt. Trotzdem beides empfohlen)
+	\item BRRPlayer von Vitor Vilela
+	\item BRRTools von Bregalad und nyanpasu64 oder das C700 VST Plugin
 \end{itemize}
 
 \medskip
@@ -374,13 +373,15 @@ Es ist auch möglich, 2 Stereo Samples zu erzeugen. Dafür muss \textit{Split St
 
 Die Datei wird nun als .wav Datei exportiert mit einer Signed 16-bit PCM Codierung.
 
-\bigskip
+%\bigskip
 
-Als nächstes öffnen wir OpenMTP, laden unsere exportierte .wav ein und klicken oben auf den Reiter \textit{Samples}. Es öffnet sich folgendes Fenster:
+\subsubsection*{OpenMPT}
+
+Als nächstes öffnen wir OpenMPT, laden unsere exportierte .wav ein und klicken oben auf den Reiter \textit{Samples}. Es öffnet sich folgendes Fenster:
 
 \begin{figure}[htbp] \centering
 	\includegraphics[width=.95\linewidth]{images/OpenMTP.png}
-	\caption{Samples bearbeiten in OpenMTP}
+	\caption{Samples bearbeiten in OpenMPT}
 	\label{OpenMTP}
 \end{figure}
 
@@ -409,7 +410,7 @@ Punkt 2 verstärkt unser gesamtes Sample im gleichen Maß ohne Clipping zu erzeu
 \bigskip
 
 Punkt 3 benötigen wir nur für Samples die loopen, also unendlich lang zu hören sind, solange eine Note nicht aufhört zu spielen.  Dieser Punkt ist recht anspruchsvoll, da es nicht einfach ist, Start und Endpunkte zu finden, die ein Sample sauber loopen zu lassen. Besonders bei stark heruntergesampleten Signalen fängt ein Sample schnell an zu \dq schwingen\dq{}. \\
-Wichtig hierbei ist, dass beide Looppunkte ein vielfaches von 16 sein müssen, falls wir im nächsten Schritt split700 benutzen sollten. Wird stattdessen das C700 VST Plugin verwendet, korrigiert dieses automatisch unsere in OpenMTP gesetzten Looppunkte. \\
+Wichtig hierbei ist, dass beide Looppunkte ein vielfaches von 16 sein müssen, falls wir im nächsten Schritt zum Konvertieren ein anderes Programm als BRRTools oder das C700 Plugin benutzen sollten. \\
 Sustain Loop benötigen wir nicht. Dieses beschreibt einen Loop der verlassen wird, sobald das Sample nicht mehr gespielt wird und dadurch das Ende zu hören ist. Da es kein echtes Release Event in AddMusicK gibt und ein Sample mit Ende einer Note sofort aufhört zu spielen, kann in einem geloopten Sample der Rest des Signals hinter dem End Loop Punkt gelöscht werden, weil dieses nie erreicht wird.
 
 
@@ -420,6 +421,37 @@ Punkt 4 wird nur benötigt, falls wir vorher in Audacity das Sample auf 2 Stereo
 \bigskip
 
 Ist das Sample fertig bearbeitet, kann es über das Diskettensymbol neben Punkt 4 wieder als .wav Datei gespeichert werden. \\
-Als letzten Schritt muss die .wav Datei nur noch in eine .brr Datei konvertiert werden. Dafür benutzen wir entweder das C700 Plugin (bevorzugt) oder split700.
+Als letzten Schritt muss die .wav Datei nur noch in eine .brr Datei konvertiert werden. Dafür benutzen wir entweder das C700 Plugin (bevorzugt) oder BRRTools.
+
+\subsubsection*{C700}
+
+Das C700 Plugin muss in ein DAW (Digital Audio Workstation) unserer Wahl installiert werden. Unter anderem unterstützen FL Studio, LMMS und OpenMPT das Plugin. \\
+Wir öffnen das Plugin in unserer DAW und legen per \textit{Drag \& Drop} die .wav Datei in die Mitte des Plugins. Danach klicken wir auf \textit{Save Smpl...} woraufhin das Plugin eine .brr und eine .smpl Datei erstellt. Letztere kann gelöscht werden. Das erstellte .brr Sample kann nun über den \#samples\{\} Block in einen Song geladen werden.
+
+\begin{figure}[htbp] \centering
+	\includegraphics[width=.95\linewidth]{images/C700.png}
+	\caption{C700 VST Plugin in FL Studio}
+	\label{C700}
+\end{figure}
+
+\subsubsection*{BRRTools}
+
+Alternativ zu C700 kann auch BRRTools verwendet werden. BRRTools kommt mit 3 konsolenbasierten Programmen daher. Wir benötigen \textit{brr\_encoder.exe}. Zunächst legen wir das Sample in das gleiche Verzeichnis wie \textit{brr\_encoder.exe}, danach öffnen wir die Konsole und navigieren in das selbige Verzeichnis und geben folgendes ein:
+
+\bigskip
+
+\textit{brr\_encoder Samplename.wav Samplename.brr}
+
+\bigskip
+
+\begin{figure}[htbp] \centering
+	\includegraphics[width=.95\linewidth]{images/BRRTools.png}
+	\caption{brr encoder über die Konsole starten}
+	\label{BRRTools}
+\end{figure}
+
+Hinter \textit{brr\_encoder} können verschiedene Optionen hinzugefügt werden. Diese und weitere Erklärungen finden sich in der ReadMe.
+
+\newpage
 
 %Der allgemeine Konvertierungsprozess wie hier beschrieben stammt größtenteils von Wakana mit Ausnahmen einiger technischer Erklärungen.
