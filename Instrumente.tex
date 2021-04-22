@@ -354,3 +354,72 @@ Die populärsten Samples die durch \textit{EMPTY.brr} ersetzt werden sind \texti
 Falls eine neue Sample Group angelegt werden soll, kopiert man dafür am einfachsten die Sample Group \#optimized aus \textit{Addmusic\_sample groups.txt}, fügt diese im Textdokument ein mit einem anderen Namen als optimized und ersetzt Samples, die nicht verwendet werden sollen durch \textit{\dq EMPTY.brr\dq{}!}. Im Song selbst wird die Sample Group schließlich mit \#SampleGroupName geladen.
 
 \subsection{Eigene Samples erstellen}
+
+
+Jede Audioquelle, die sich in eine .wav Datei konvertieren lässt, sind potentielle Samples die sich in Songs benutzen lassen. Als erstes öffnen wir Audacity und laden unsere Sounddatei ein
+(z.B. .mp3 oder .wav). Mit dem Selection Tool (\textit{F1}) markieren wir nun alle Bereiche, die entfernt werden sollen und löschen diese mit \textit{Entf}. Danach klicken wir links auf den kleinen Pfeil neben dem Dateinahmen und wählen dort \textit{Split Stereo to Mono} aus.
+
+\begin{figure}[htbp] \centering
+	\includegraphics[width=.50\linewidth]{images/Audacity.png}
+	\caption{Track aufteilen in Audacity}
+	\label{Audacity}
+\end{figure}
+
+\bigskip
+
+Dadurch beugen wir vor, dass das Sample im nächsten Schritt nicht nur auf einem Lautsprecher zu hören ist. Außerdem wird dadurch die Größe des Samples ungefähr halbiert. \\
+Es ist auch möglich, 2 Stereo Samples zu erzeugen. Dafür muss \textit{Split Stereo Track} anstatt \textit{Split Stereo to Mono} ausgewählt werden. Das hat allerdings den Nachteil, dass 2 Samples für einen Sound benötigt werden, was wiederum bedeutet, dass doppelt so viel Speicher verbraucht wird und im Song selbst 2 Kanäle belegt werden müssen.
+
+\bigskip
+
+Die Datei wird nun als .wav Datei exportiert mit einer Signed 16-bit PCM Codierung.
+
+\bigskip
+
+Als nächstes öffnen wir OpenMTP, laden unsere exportierte .wav ein und klicken oben auf den Reiter \textit{Samples}. Es öffnet sich folgendes Fenster:
+
+\begin{figure}[htbp] \centering
+	\includegraphics[width=.95\linewidth]{images/OpenMTP.png}
+	\caption{Samples bearbeiten in OpenMTP}
+	\label{OpenMTP}
+\end{figure}
+
+\bigskip
+
+Wir benötigen nur die 4 markierten Funktionen. Diese sind:
+
+\medskip
+
+\begin{itemize}
+	\item \textbf{1. Up-/Down Sampling}
+	\item \textbf{2. Normalize}
+	\item \textbf{3. Loop Points}
+	\item \textbf{4. Sample Auswahl} 
+\end{itemize}
+
+\medskip
+
+Punkt 1 benutzen wir zum Downsamplen. Damit ist gemeint, dass die Samplerate -- also die Abtastrate -- verringert wird. Voreingestellt ist eine Samplerate von 44.1 kHz, halbieren wir diese durch downsamplen auf 22.05 kHz wird unser Signal nur noch mit der halben Anzahl an Samples (damit sind die Abtastpunkte gemeint) abgetastet. Die Konsequenzen sind, dass die Hälfte an Informationen gelöscht werden, was in ein halb so großes Signal mit Qualitätsverlust resultiert. Außerdem wird die akustisch wahrnehmbare Frequenz bei gleichem Pitch verdoppelt was wir an anderer Stelle ausnutzen können. \\
+In der Regel sollte man ein- bis maximal zweimal downsamplen um das Sample klein genug zu bekommen.
+
+\bigskip
+
+Punkt 2 verstärkt unser gesamtes Sample im gleichen Maß ohne Clipping zu erzeugen (Abschneiden der Amplitude). Es ist immer einfacher, ein Sample im nachhinein leiser einzustellen als lauter, weshalb wir diese Option immer benutzen sollten.
+
+\bigskip
+
+Punkt 3 benötigen wir nur für Samples die loopen, also unendlich lang zu hören sind, solange eine Note nicht aufhört zu spielen.  Dieser Punkt ist recht anspruchsvoll, da es nicht einfach ist, Start und Endpunkte zu finden, die ein Sample sauber loopen zu lassen. Besonders bei stark heruntergesampleten Signalen fängt ein Sample schnell an zu \dq schwingen\dq{}. \\
+Wichtig hierbei ist, dass beide Looppunkte ein vielfaches von 16 sein müssen, falls wir im nächsten Schritt split700 benutzen sollten. Wird stattdessen das C700 VST Plugin verwendet, korrigiert dieses automatisch unsere in OpenMTP gesetzten Looppunkte. \\
+Sustain Loop benötigen wir nicht. Dieses beschreibt einen Loop der verlassen wird, sobald das Sample nicht mehr gespielt wird und dadurch das Ende zu hören ist. Da es kein echtes Release Event in AddMusicK gibt und ein Sample mit Ende einer Note sofort aufhört zu spielen, kann in einem geloopten Sample der Rest des Signals hinter dem End Loop Punkt gelöscht werden, weil dieses nie erreicht wird.
+
+
+\bigskip
+
+Punkt 4 wird nur benötigt, falls wir vorher in Audacity das Sample auf 2 Stereo Tracks aufgeteilt haben. Hier kann zwischen den einzelnen Samples hin und her gewechselt werden.
+
+\bigskip
+
+Ist das Sample fertig bearbeitet, kann es über das Diskettensymbol neben Punkt 4 wieder als .wav Datei gespeichert werden. \\
+Als letzten Schritt muss die .wav Datei nur noch in eine .brr Datei konvertiert werden. Dafür benutzen wir entweder das C700 Plugin (bevorzugt) oder split700.
+
+%Der allgemeine Konvertierungsprozess wie hier beschrieben stammt größtenteils von Wakana mit Ausnahmen einiger technischer Erklärungen.
