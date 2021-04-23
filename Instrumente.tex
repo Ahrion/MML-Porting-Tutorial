@@ -38,7 +38,7 @@ Ein sehr umfangreiches Sample Pack ist samples of insanity von musicalman. Es is
 
 \bigskip
 
-Sollen Custom Samples für einen Song verwendet werden, müssen sich diese in einem Unterverzeichnis von AddmusicK/samples/ liegen. Am besten legt man für jeden Song einen eigenen Ordner für Samples an. Mit dem Spezial Befehl \#path weiß AddMusicK, in welchem Verzeichnis Samples gesucht werden sollen. \\
+Sollen Custom Samples für einen Song verwendet werden, müssen diese in einem Unterverzeichnis von AddmusicK/samples/ liegen. Am besten legt man für jeden Song einen eigenen Ordner für Samples an. Mit dem Spezial Befehl \#path weiß AddMusicK, in welchem Verzeichnis Samples gesucht werden sollen. \\
 Wir fügen am Beispiel unseres Songs aus Kapitel \ref{sec:ErstenSongSchreiben} ein Custom Sample ein. Als erstes erstellen wir einen Ordner mit dem Namen \textit{Prelude} in AddmusicK/samples/. Danach kopieren wir uns das Sample Harp 2.brr, welches in samples of insanity/individual samples/other liegt und fügen es in den von uns zuvor erstellten Ordner \textit{Prelude} ein. Außerdem öffnen wir das beiliegende Textdokument \textit{!patterns.txt} worauf wir gleich noch zurückgreifen werden. \\
 Jetzt öffnen wir wieder unseren Song und geben den Pfad mit \#path  \dq Prelude\dq{} an. Danach bestimmen wir mit \#samples\{\}, welche Samples aus dem Ordner benutzt werden sollen. Wir tragen neben dem Samplenamen noch eine Samplegroup ein die wir verwenden möchten, was entweder die Samplegroup \#default oder \#optimized ist, falls wir keine eigene erstellen. \\
 AddMusicK legt im Hintergrund die Samplegroup \#default automatisch an wenn kein \#Samples\{\} Block vorhanden ist, weswegen wir bisher keine Samplegroup selber anlegen mussten.
@@ -425,7 +425,7 @@ Als letzten Schritt muss die .wav Datei nur noch in eine .brr Datei konvertiert 
 
 \subsubsection*{C700}
 
-Das C700 Plugin muss in ein DAW (Digital Audio Workstation) unserer Wahl installiert werden. Unter anderem unterstützen FL Studio, LMMS und OpenMPT das Plugin. \\
+Das C700 Plugin muss in eine DAW (Digital Audio Workstation) unserer Wahl installiert werden. Unter anderem unterstützen FL Studio, LMMS und OpenMPT das Plugin. \\
 Wir öffnen das Plugin in unserer DAW und legen per \textit{Drag \& Drop} die .wav Datei in die Mitte des Plugins. Danach klicken wir auf \textit{Save Smpl...} woraufhin das Plugin eine .brr und eine .smpl Datei erstellt. Letztere kann gelöscht werden. Das erstellte .brr Sample kann nun über den \#samples\{\} Block in einen Song geladen werden.
 
 \begin{figure}[htbp] \centering
