@@ -1,0 +1,12 @@
+; Pan Fading
+$DC $XX $YY
+; Tempo fade
+$E3 $XX $YY
+; Global volume fade
+$E1 $XX $YY
+; Vol Fading
+$E8 $XX $YY
+;Pitch Bending
+$DD $XX $YY $ZZ
+o3 f4 $DD $00 $18 $A4 e8
+o3 f4 $DD $00 $18 >c  e8

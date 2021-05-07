@@ -63,10 +63,146 @@ Channel Ticks 0 - 7 geben die Länge der Kanäle in Ticks an, wobei es sich hier
 Die letzten 3 Werte geben die Länge des Intros, des geloopten Song selbst und der Summe aus Intro und geloopten Song in Sekunden an.
 
 \subsection{Hexbefehle}
+
+Hexbefehle sind einfach durch ihren Aufbau zu identifizieren. Sie beginnen mit einem \$ und einer Befehlsnummer als Hexadezimalzahl, gefolgt von ein bis maximal 3 Hexwerten (einzige Ausnahme sind die Filter Koeffizienten). \\
+Im Falle der Hexbefehle \$F4 folgt nur ein einziger Hexwert um den Befehl von anderen zu differenzieren.
+
+\bigskip
+
+Falls ein Befehl eine Länge oder Dauer als Parameter verwendet, handelt es sich hierbei immer um einen Tick Wert im Hexadezimalsystem. Eine Tabelle für einige Standardlängen findet sich im Anhang in Tabelle \ref{tickshex}.
+
 \subsubsection{Pan Fading}
+
+Pan Fading beschreibt den Verlauf der Lautstärke eines Instruments zwischen den Lautsprechern.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=2, lastline=2]{codes/Hex.txt}
+
+\medskip
+
+mit 
+
+\begin{itemize}
+	\item Dauer \$XX 
+	\item Ziel Panning \$YY
+\end{itemize}
+
+wobei \$00 y0 (Lautstärke vollständig rechts), \$0A y10 (Lautstärke gleichmäßig verteilt) und \$14 y20 (Lautstärke vollständig links) entspricht.
+
 \subsubsection{Tempo Fading}
+
+Tempo Fading beschreibt den globalen Verlauf des Tempos.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=4, lastline=4]{codes/Hex.txt}
+
+\medskip
+
+mit 
+
+\begin{itemize}
+	\item Dauer \$XX 
+	\item Ziel Panning \$YY
+\end{itemize}
+
+Dabei kann sich der Befehl in einem beliebigen Kanal befinden.
+
+\subsubsection{Global volume Fading}
+
+Global Volume Fading beschreibt den Verlauf der globalen Lautstärke.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=6, lastline=6]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Dauer \$XX 
+	\item Ziel Lautstärke \$YY
+\end{itemize}
+
+Dabei kann sich der Befehl in einem beliebigen Kanal befinden.
+
 \subsubsection{Vol Fading}
-\subsubsection{Pitch Bendings}
+
+Volume Fading beschreibt den Verlauf der Lautstärke eines einzelnen Kanals.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=8, lastline=8]{codes/Hex.txt}
+
+\medskip
+
+mit 
+
+\begin{itemize}
+	\item Dauer \$XX
+	\item Ziel Lautstärke \$YY 
+\end{itemize}
+
+\subsubsection{Pitch Bending}
+
+
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=10, lastline=10]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Verzögerung \$XX
+	\item Dauer \$YY
+	\item Ziel Note \$ZZ
+\end{itemize}
+
+Der Befehl steht hinter der Note, die ein Pitch Bending erfahren soll. \\
+Die Verzögerung gibt an, wann der Befehl ausgeführt werden soll, die Dauer gibt an und wie lange das Bending dauert. Der Hexwert \$ZZ, der eine Note beschreibt, ist in Tabelle \ref{Noten} nachzulesen.
+
+\begin{table}
+\begin{tabularx}{\textwidth}{|l|X|X|X|X|X|X|X|X|X|X|X|X|}
+	\hline
+	& C & C\# & D & D\# & E & F & F\# & G & G\# & A & A\# & B   \\
+	\hline
+	o1 & 80 & 81 & 82 & 83 & 84 & 85 & 86 & 87 & 88 & 89 & 8A & 8B \\
+	\hline
+	02 & 8C & 8D & 8E & 8F & 90 & 91 & 92 & 93 & 94 & 95 & 96 & 97 \\
+	\hline
+	o3 & 98 & 99 & 9A & 9B & 9C & 9D & 9E & 9F & A0 & A1 & A2 & A3 \\
+	\hline
+	o4 & A4 & A5 & A6 & A7 & A8 & A9 & AA & AB & AC & AD & AE & AF \\
+	\hline
+	o5 & B0 & B1 & B2 & B3 & B4 & B5 & B6 & B7 & B8 & B9 & BA & BB \\
+	\hline
+	o6 & BC & BD & BE & BF & C0 & C1 & C2 & C3 & C4 & C5 & & \\
+	\hline
+\end{tabularx}
+\caption{Noten als Hexwerte}
+\label{Noten}
+\end{table}
+
+
+Es gibt zudem Wege, den Befehl einfacher auszuführen.
+
+\bigskip
+
+Anstelle des \$ZZ Wertes kann auch direkt eine Note angegeben werden (inklusive Oktavwechsel). Wichtigster Unterschied ist, dass durch ein Pitch Bending mit \$ZZ kein Oktavwechsel für nachfolgende Noten statt findet. Beispiel:
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=11, lastline=12]{codes/Hex.txt}
+
+\medskip
+
+Beide Befehle führen ein Pitch Bending von o3f nach o4c durch, allerdings ist die nachfolgende Note im ersten befehl ein o3e und im zweiten ein o4e. \\
+
 \subsubsection{Vibrato}
 \subsubsection{Tremolo}
 \subsubsection{Legato}
