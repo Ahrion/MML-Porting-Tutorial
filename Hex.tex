@@ -164,7 +164,7 @@ mit
 \end{itemize}
 
 Der Befehl steht hinter der Note, die ein Pitch Bending erfahren soll. \\
-Die Verzögerung gibt an, wann der Befehl ausgeführt werden soll, die Dauer gibt an und wie lange das Bending dauert. Der Hexwert \$ZZ, der eine Note beschreibt, ist in Tabelle \ref{Noten} nachzulesen.
+Die Verzögerung gibt an, wann der Befehl ausgeführt werden soll, die Dauer gibt an wie lange das Bending dauert. Der Hexwert \$ZZ, der eine Note beschreibt, ist in Tabelle \ref{Noten} nachzulesen.
 
 \begin{table}
 \begin{tabularx}{\textwidth}{|l|X|X|X|X|X|X|X|X|X|X|X|X|}
@@ -201,11 +201,67 @@ Anstelle des \$ZZ Wertes kann auch direkt eine Note angegeben werden (inklusive 
 
 \medskip
 
-Beide Befehle führen ein Pitch Bending von o3f nach o4c durch, allerdings ist die nachfolgende Note im ersten befehl ein o3e und im zweiten ein o4e. \\
+Beide Befehle führen ein Pitch Bending von o3f nach o4c durch, allerdings ist die nachfolgende Note im ersten Befehl ein o3e und im zweiten ein o4e.
+
+\bigskip
+
+Zusätzlich kann durch den Einsatz von Haltebögen ein Hexbefehl anschaulicher beschrieben werden, in einigen Fällen sind diese auch notwendig um innerhalb einer Note mehrere oder unterschiedliche Befehle auszuführen. Beispiel:
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=13, lastline=14]{codes/Hex.txt}
+
+\medskip
+
+Beide Befehle beschreiben den gleichen Vorgang. Der erste Befehl wird erst nach der Verzögerungszeit von \$30 Ticks (entspricht der Länge einer Viertelpause) ausgeführt. Der zweite Befehl spielt die c+4 Note, ohne den Pitch Bending Befehl zu benutzen, der Befehl wird dann aber auf den Teil des Haltebogens sofort angewendet. Dieses Beispiel verdeutlicht auch, dass Vorsicht geboten ist bei Noten mit Haltebögen, die mit Pitch Bendings bearbeitet werden sollen.
+
+\bigskip
+
+Außerdem muss darauf geachtet werden, Haltebögen bei Noten mit Notenlängen größer 2 richtig anzuwenden. AddMusicK interpretiert diese intern auch mit Haltebögen. Ein c1 wird von AddMusicK beispielsweise als ein c2\textasciicircum2 gehandhabt. Dadurch entstehen Fehler. Beispiel:
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=15, lastline=16]{codes/Hex.txt}
+
+\medskip
+
+Zeile 2 zeigt, wie der Befehl der ersten Zeile von AddMusicK interpretiert wird. Das Pitch Bending würde nie ausgeführt werden, da eine halbe Note lang nichts passiert und danach eine weitere halbe Note lang (\$60) Verzögert wird, bis der Befehl ausgeführt werden soll. Es wird also eine ganze Note lang gewartet, bevor überhaupt das Bending beginnen würde.
+
+Soll c1 nach einer halben Note das Pitch Bending beginnen, muss der Befehl wie folgt umgeschrieben werden:
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=17, lastline=17]{codes/Hex.txt}
+
+\medskip
+
+
 
 \subsubsection{Vibrato}
+
+Vibrato beschreibt das Schwingen um eine Tonhöhe.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=19, lastline=19]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Verzögerung \$XX
+	\item Frequenz, wie schnell geschwungen wird \$YY
+	\item Amplitude, mit der um die Note geschwungen wird \$ZZ
+\end{itemize}
+
+Der Befehl wird auf alle nachfolgenden Noten des Kanals angewendet. \\
+Mit \$DF kann das Vibrato ausgeschaltet werden.
+
+
 \subsubsection{Tremolo}
 \subsubsection{Legato}
 \subsubsection{Light Staccato}
+\subsubsection{ADSR / Gain einstellen}
 \subsubsection{Echo}
 \subsubsection{Yoshi Drums}
