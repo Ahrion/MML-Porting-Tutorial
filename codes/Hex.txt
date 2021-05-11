@@ -17,3 +17,15 @@ c+2 ^2 $DD $60 $60 <a
 c+2 $DD $60 $60 <a ^2
 ; Vibrato
 $DE $XX $YY
+$EA $XX
+$DE $60 $10 $40 c1
+$DE $60 $10 $40 c2 $EA $30 ^2
+; ADSR / Gain
+$ED $DA $SR
+$ED $80 $YY
+; Echo
+$EF $XX $YY $ZZ
+$F1 $XX $YY $ZZ
+$F5 $X0 $X1 $X2 $X3 $X4 $X5 $X6 $X7
+; Yoshi Drums
+$F4 $06

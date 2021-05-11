@@ -83,6 +83,7 @@ Mit Pitch und Fine Pitch stimmen wir das Instrument auf den richtigen Pitch, äh
 
 
 \subsubsection{ADSR}
+\label{sec:ADSR}
 
 Allgemein lassen sich verschiedene Parameter mit ADSR ansteuern, im Falle von AddMusicK allerdings nur der Verlauf der Lautstärke. Außerdem ist ADSR in AddMusicK leicht anders definiert als üblich. Das kommt daher, dass es beim SPC700 kein echtes Release Event gibt. Zwar gibt es so genannte Off Keying Events (immer wenn eine Note endet), diese lösen aber nicht das herkömmliche Release Event aus, weil das Instrument sofort aufhört zu spielen, sobald das Off Keying Event eintritt. (Es gibt allerdings die Möglichkeit, ein künstliches Release Event nach Ende einer Note selbst zu erzeugen)
 
@@ -177,6 +178,7 @@ Das Instrument wird durch ADSR wie folgt beschrieben: \\
 
 
 \subsubsection{Gain}
+\label{sec:Gain}
 
 Neben ADSR kann ein Instrument auch durch Gain beschrieben werden. Wie bei ADSR gibt es zwei Möglichkeiten, Gain zu definieren. Zum einen durch das dritte Argument in \#instruments\{\} (wird dort aber nur aktiv, falls \$DA in \#instruments\{\} kleiner als \$80 ist), zum anderen durch die Hexbefehle \$FA \$01 \$XX oder \$ED \$80+ \$XX. \\
 Gain beschreibt keine vollständige Hüllkurve sondern nur das Anschlag- oder Abklingverhalten eines Instruments. Im Vergleich zu ADSR bietet Gain allerdings auch exponentielle Verläufe an, wohingegen durch ADSR nur lineare Verläufe möglich sind. \\

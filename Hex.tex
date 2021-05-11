@@ -64,9 +64,7 @@ Die letzten 3 Werte geben die Länge des Intros, des geloopten Song selbst und d
 
 \subsection{Hexbefehle}
 
-Hexbefehle sind einfach durch ihren Aufbau zu identifizieren. Sie beginnen mit einem \$ und einer Befehlsnummer als Hexadezimalzahl, gefolgt von ein bis maximal 3 Hexwerten (einzige Ausnahme sind die Filter Koeffizienten). \\
-Im Falle der Hexbefehle \$F4 folgt nur ein einziger Hexwert um den Befehl von anderen zu differenzieren.
-
+Hexbefehle sind einfach durch ihren Aufbau zu identifizieren. Sie beginnen mit einem \$ und einer Befehlsnummer als Hexadezimalzahl, gefolgt von ein bis maximal 3 Hexwerten (einzige Ausnahme sind die Filter Koeffizienten).
 \bigskip
 
 Falls ein Befehl eine Länge oder Dauer als Parameter verwendet, handelt es sich hierbei immer um einen Tick Wert im Hexadezimalsystem. Eine Tabelle für einige Standardlängen findet sich im Anhang in Tabelle \ref{tickshex}.
@@ -147,7 +145,7 @@ mit
 
 \subsubsection{Pitch Bending}
 
-
+Pitch Bending schreibt den Verlauf des Pitches einer Note. Prominentes Beispiel dafür ist eine Gitarrensaite, die man nach oben oder unten schiebt.
 
 \medskip
 
@@ -251,17 +249,159 @@ mit
 
 \begin{itemize}
 	\item Verzögerung \$XX
-	\item Frequenz, wie schnell geschwungen wird \$YY
-	\item Amplitude, mit der um die Note geschwungen wird \$ZZ
+	\item Frequenz  \$YY, wie schnell geschwungen wird
+	\item Amplitude \$ZZ, mit der um eine Note geschwungen wird
 \end{itemize}
 
 Der Befehl wird auf alle nachfolgenden Noten des Kanals angewendet. \\
-Mit \$DF kann das Vibrato ausgeschaltet werden.
+Mit \$DF kann das Vibrato ausgeschaltet werden. \\
+Zusätzlich kann Vibrato Fading eingestellt werden:
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=20, lastline=20]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Dauer \$XX
+\end{itemize}
+
+Dabei muss Vibrato Fading immer nach Vibrato benutzt werden, da sich der \$EA Befehl auf die \$YY und \$ZZ Werte von \$DE bezieht. Beispiel:
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=21, lastline=22]{codes/Hex.txt}
+
+\medskip
+
+Die erste Zeile beschreibt ein c1, dass nach der Dauer einer halben Note anfängt zu schwingen.
+Die zweite Zeile beschreibt ein c1, dass nach der Dauer einer halben Note anfängt, anzuschwingen,
+und erreicht das vorher definierte Vibrato Verhalten nach einer Viertelnote.
+
+
+\subsubsection{ADSR / Gain einstellen}
+
+ADSR kann während der Laufzeit verändert werden.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=24, lastline=24]{codes/Hex.txt}
+
+\medskip
+
+wobei der Da Wert zwischen \$00 und \$7F liegen muss, ansonsten wird Gain aktiviert.
+
+\bigskip
+
+Genauso kann Gain umgestellt werden.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=25, lastline=25]{codes/Hex.txt}
+
+\medskip
+
+mit \$YY dem Gain Wert. \$80 kann auch größer sein, darf aber nicht kleiner sein, ansonsten wird ADSR aktiviert. \\
+
+Wird ein Instrument mit @ aufgerufen, werden die ADSR bzw. Gain Werte, die durch \$ED eingestellt wurden, zurückgesetzt. \\
+Weitere Informationen zu ADSR und Gain siehe Kapitel \ref{sec:ADSR} und \ref{sec:Gain}.
+
+\subsubsection{Echo}
+
+Mit Echo kann der Raumklang eingestellt werden.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=27, lastline=27]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Kanäle \$XX
+	\item Echo Lautstärke links \$YY
+	\item Echo Lautstärke rechts \$ZZ
+\end{itemize}
+
+Welche Kanäle Echo erfahren sollen, wird mit \$XX festgelegt. Diese werden Bitweise durch die Kanäle in umgekehrter Reihenfolge bestimmt und letztendlich als Hexwert dargestellt. Ein Beispiel:
+
+\bigskip
+
+Die Kanäle 5, 6 und 7 (\#4, \#5 und \#6) sollen Echo erhalten. Wir schreiben die Kanalnummern absteigend auf und setzen eine 1 für Echo, ansonsten 0.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabularx}{8.5cm}{|X|c|c|c|c|c|c|c|c|}
+		\hline
+		Kanalnummer: & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+		\hline
+		Bits: & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+
+Wir erhalten die Binärzahl 0b1110000 (0b ist der Präfix für Binärzahlen). Als Hexadezimalzahl ist dies \$70.
+
+\bigskip
+
+Zusätzlich müssen weitere Parameter eingestellt werden, um Echo zu aktivieren.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=28, lastline=28]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Echo Verzögerung \$XX
+	\item Reverberation \$YY
+	\item FIR Filter \$ZZ
+\end{itemize}
+
+Beide Befehle treten immer zusammen auf. \\
+
+\$XX muss zwischen \$01 und \$0F liegen, bei \$00 ist Echo deaktiviert. Hierbei ist aber aufzupassen, da der Echo Delay Wert maßgeblich den Ram Speicher beeinträchtigt. Die Echo Size kann berechnet werden, indem man den \$XX Wert mit 2kB multipliziert. \$0F Echo Delay nimmt also 30kB Platz ein, was knapp die Hälfte des gesamten Audio RAMs entspricht.
+
+\bigskip
+
+Reverberation (kurz Reverb, deutsch: Nachhall) beschreibt die kontinuierliche Reflexion von Schallwellen in einem geschlossenen Raum, die sich im Vergleich zum Direktschall durch lange Laufzeiten auszeichnet. Durch Reverb lässt sich der Hall eines Raumes simulieren, zwei extreme wären beispielweise eine Kirche (großer Hall) und ein Tonstudio (kein Hall).
+
+\bigskip
+
+\$ZZ kann entweder auf \$01 (an) bzw. \$00 (aus) gestellt werden. Voreingestellt ist das FIR Filter (Finite Impulse Response, deutsch: Endliche Impulsantwort) beschrieben mit dem 1. Filterkoeffizienten auf \$7F und alle weiteren auf \$00. \\
+Es ist auch möglich seinen eigenen FIR Filter zu designen mit dem folgenden Befehl:
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=29, lastline=29]{codes/Hex.txt}
+
+\medskip
+
+Hierdurch lassen sich verschiedene Filterformen realisieren, beispielsweise, Hochpass- oder Tiefpassfilter.
+Das Filter lässt sich nur auf das Echo Signal anwenden.
+
+\bigskip
+
+Mit \$F4 \$03 kann Echo in einem Kanal umgeschaltet werden. Dies ist notwendig, falls ein Kanal verschiedene Instrumente verwendet, auf die nicht alle Echo angewandt werden soll.
+
+\subsubsection{Yoshi Drums}
+
+Falls ein Song den Yoshi Drums Befehl verwendet, ist der 5. Kanal (\#4) so lange stumm, bis Mario sich auf Yoshi setzt. Dabei kann sich alles mögliche in diesem Kanal befinden, der Befehl aktiviert Yoshi lediglich zu einem Schalter für den 5. Kanal.
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=31, lastline=31]{codes/Hex.txt}
+
+\medskip
+
 
 
 \subsubsection{Tremolo}
 \subsubsection{Legato}
 \subsubsection{Light Staccato}
-\subsubsection{ADSR / Gain einstellen}
-\subsubsection{Echo}
-\subsubsection{Yoshi Drums}
