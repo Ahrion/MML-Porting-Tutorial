@@ -107,7 +107,7 @@ mit
 
 Dabei kann sich der Befehl in einem beliebigen Kanal befinden.
 
-\subsubsection{Global volume Fading}
+\subsubsection{Global Volume Fading}
 
 Global Volume Fading beschreibt den Verlauf der globalen Lautstärke.
 
@@ -126,7 +126,7 @@ mit
 
 Dabei kann sich der Befehl in einem beliebigen Kanal befinden.
 
-\subsubsection{Vol Fading}
+\subsubsection{Volume Fading}
 
 Volume Fading beschreibt den Verlauf der Lautstärke eines einzelnen Kanals.
 
@@ -145,7 +145,7 @@ mit
 
 \subsubsection{Pitch Bending}
 
-Pitch Bending schreibt den Verlauf des Pitches einer Note. Prominentes Beispiel dafür ist eine Gitarrensaite, die man nach oben oder unten schiebt.
+Pitch Bending beschreibt den Verlauf des Pitches einer Note. Prominentes Beispiel dafür ist eine Gitarrensaite, die man nach oben schiebt.
 
 \medskip
 
@@ -254,7 +254,10 @@ mit
 \end{itemize}
 
 Der Befehl wird auf alle nachfolgenden Noten des Kanals angewendet. \\
-Mit \$DF kann das Vibrato ausgeschaltet werden. \\
+Mit \$DF kann das Vibrato ausgeschaltet werden.
+
+\bigskip
+
 Zusätzlich kann Vibrato Fading eingestellt werden:
 
 \medskip
@@ -292,7 +295,7 @@ ADSR kann während der Laufzeit verändert werden.
 
 \medskip
 
-wobei der Da Wert zwischen \$00 und \$7F liegen muss, ansonsten wird Gain aktiviert.
+wobei der DA Wert zwischen \$00 und \$7F liegen muss, ansonsten wird Gain aktiviert.
 
 \bigskip
 
@@ -375,7 +378,7 @@ Reverberation (kurz Reverb, deutsch: Nachhall) beschreibt die kontinuierliche Re
 
 \bigskip
 
-\$ZZ kann entweder auf \$01 (an) bzw. \$00 (aus) gestellt werden. Voreingestellt ist das FIR Filter (Finite Impulse Response Filter, deutsch: Filter mit endlicher Impulsantwort) beschrieben mit dem 1. Filterkoeffizienten auf \$7F und alle weiteren auf \$00. \\
+Mit \$ZZ kann ein FIR Filter (Finite Impulse Response Filter, deutsch: Filter mit endlicher Impulsantwort) entweder an- (\$01) bzw. ausgeschaltet (\$00) werden. Voreingestellt ist das FIR Filter mit dem 1. Filterkoeffizienten auf \$7F und alle weiteren auf \$00. \\
 Es ist auch möglich seinen eigenen FIR Filter zu designen mit dem folgenden Befehl:
 
 \medskip
@@ -394,14 +397,61 @@ Mit \$F4 \$03 kann Echo in einem Kanal umgeschaltet werden. Dies ist notwendig, 
 \subsubsection{Yoshi Drums}
 
 Falls ein Song den Yoshi Drums Befehl verwendet, ist der 5. Kanal (\#4) so lange stumm, bis Mario sich auf Yoshi setzt. Dabei kann sich alles mögliche in diesem Kanal befinden, der Befehl aktiviert Yoshi lediglich zu einem Schalter für den 5. Kanal.
+
 \medskip
 
 \lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=31, lastline=31]{codes/Hex.txt}
 
 \medskip
 
+\subsubsection{Amplify}
 
+Samples können über ihre normale Lautstärke hinaus verstärkt werden.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=33, lastline=33]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Verstärkung \$XX
+\end{itemize}
+
+Dabei entspricht \$FF einer Verstärkung von 2 und \$00 von 1 (keine Verstärkung). Hohe Lautstärkepegel können zu Clipping führen.
 
 \subsubsection{Tremolo}
+
+Tremolo beschreibt in der Musiktheorie das schnelle Wiederholen eines einzelnen Tones oder Akkordes bzw. der Wechsel zwischen 2 verschiedenen Tönen. In AddmusikK ist nur der erste Fall möglich.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=35, lastline=35]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Verzögerung \$XX
+	\item Wiederholrate \$YY
+	\item Amplitude \$ZZ
+\end{itemize}
+
+Tremolo verhält sich ähnlich wie Vibrato.
+
+
 \subsubsection{Legato}
-\subsubsection{Light Staccato}
+
+Legato lässt Töne ohne Unterbrechungen abspielen.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=37, lastline=37]{codes/Hex.txt}
+
+\medskip
+
+Mit Legato findet kein Rekeying (erneutes Anschlagen) von Samples statt, weswegen diese dann nur bei der ersten gespielten Note von Anfang an spielen.
+
