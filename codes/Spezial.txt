@@ -1,0 +1,20 @@
+#samples
+{
+        #samplegroup
+        "sample1.brr"
+        "sample2.brr"
+}
+#instruments
+{
+        "sample1.brr" $DA $SR $GA $XX $YY ; @30
+        @0 $DA $SR $GA $XX $YY		  ; @31
+        n1F $DA $SR $GA $XX $YY		  ; @32
+}
+#spc
+{
+	#game	"Name des Spiels"
+	#title	"Name des Songs"
+	#author "Name des Autors"
+	#length "Dauer des Songs"
+	#comment "Kommentar"
+}

@@ -1,5 +1,84 @@
 \section{Spezialbefehle, Standardbefehle und Makros}
-\subsection{Loops}
-\subsection{Intros}
-\subsection{Makros}
-\subsection{Remote Codes}
+
+In diesem Kapitel werden einige Spezial- und Standardbefehle vorgestellt.
+Eine vollständige Liste aller Befehle kann unter: \\ \textit{AddmusicK/readme\_files/syntax\_reference.html} eingesehen werden.
+
+\subsection{Spezialbefehle}
+
+Spezialbefehle erkennt man daran, dass sie mit einem \# beginnen (einizge Ausnahmen sind Kanalnummern). Alle Spezialbefehle müssen sich außerhalb der Kanäle befinden, einige müssen sich zwingend über den Kanälen oder in einer gewissen Reihenfolge platziert werden.
+
+
+\subsubsection*{\#path \dq Pfadname\dq{}}
+
+Falls custom Samples verwendet werden sollen, gibt \#path den Pfad an, wo diese liegen (müssen sich in einem Unterverzeichnis von samples/ befinden).
+
+\subsubsection*{\#samples\{\}}
+
+Verwendete Custom Samples werden in \#samples\{\} gelistet. Neben den Samples muss sich zusätzlich eine Samplegroup bestimmt werden.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=1, lastline=6]{codes/Spezial.txt}
+
+\medskip
+
+Anstelle von \#path kann auch der Pfad der Samples in den Namen angegeben werden.
+
+\subsubsection*{\#samples\{\}}
+
+In \#instruments\{\} können ADSR, Gain und Pitch eines SMW Samples, Custom Samples, oder Noise (Ruaschen, wird benutzt um 8 Bit Percussions zu simulieren) definiert werden. Neu definierte Instrumente werden durchnummeriert, angefangen mit @30 und mit @ aufgerufen.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=7, lastline=12]{codes/Spezial.txt}
+
+\medskip
+
+Für weitere Informationen zu \#samples\{\}, \#samplegroups und \#instruments\{\} siehe Kapitel \ref{sec:instrumente}.
+
+\subsubsection*{\#spc}
+
+Mit \#spc können Informationen zum Song hinterlegt werden, die in Lunar Magic und SPC Playern angezeigt werden.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=13, lastline=20]{codes/Spezial.txt}
+
+\medskip
+
+Es können beliebig viele dieser Einträge benutzt werden.
+
+\subsubsection*{\#halvetempo}
+
+Halbiert das Tempo, Notenlängen und Hexbefehle, die eine Dauer verwenden. Nützlich, um Slowdowns zu umgehen, da diese maßgeblich durch zu hohes Tempo auftreten.
+
+\subsubsection*{\#option}
+
+Mit \#option, gefolgt von einem Schlüsselwort, können folgende Einstellungen vorgenommen werden:
+
+\begin{table}[htbp]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		Parameter & Beschreibung\\
+		\hline
+		tempoimmunity & Das Tempo des Songs wird nicht erhöht, falls der SMW Timer unter 100 Sekunden ist.\\
+		\hline
+		dividetempo & Wie \#halvetempo, es kann aber ein anderer Divisor als 2 ausgewählt werden.\\
+		\hline
+		smwvtable & Der Song benutzt die SMW Lautstärketabelle anstatt der standard N-SPC Tabelle\\
+		\hline
+		noloop & Der Song wird nur ein einziges mal abgespielt und nicht geloopt.\\
+		\hline
+	\end{tabularx}
+\end{table}
+
+Beispiel: \#option dividetempo 3
+
+
+\subsubsection*{\#define, \#undef, \#ifdef, \#ifndef, \#if, \#endif, \#error}
+
+\subsection{Standardbefehle}
+\subsubsection{Loops}
+\subsubsection{Intros}
+\subsubsection{Makros}
+\subsubsection{Remote Codes}
