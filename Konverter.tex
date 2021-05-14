@@ -158,7 +158,7 @@ Ein vollständiges Tutorial zu FL Studio würde bei weitem den Rahmen sprengen, 
 \subsubsection*{Channel Rack}
 
 Im Channel Rack (F6) arbeiten wir die meiste Zeit. Hier befinden sich Kanäle, die entweder aus einem einfachen Sample oder einem VST (Virtual Studio Technology) Plugin bestehen. Jeder Kanal kann Noten beinhalten (im Falle eines Automation Clips ein Steuersignal). \\
-Mit dem grünen Punkt Links vor jedem Kanal kann dieser Stumm geschaltet werden. Der linke Regler ist für das Panning (Lautstärkeverteilung auf Lautsprechern) und der rechte für die Lautstärke des Kanals zuständig. Das Feld daneben kann mit einer Zahl besetzt werden. Diese gibt an, welchen Platz der Kanal im Mixer (F9) belegen soll, um dort weiter mit Effekten wie Reverb etc. bearbeitet zu werden. Da wir nur mit MIDI arbeiten, kann sowohl dieses Zahlenfeld, als auch der Mixer ignoriert werden. \\
+Mit dem grünen Punkt links vor jedem Kanal kann dieser Stumm geschaltet werden. Der linke Regler ist für das Panning (Lautstärkeverteilung auf Lautsprechern) und der rechte für die Lautstärke des Kanals zuständig. Das Feld daneben kann mit einer Zahl besetzt werden. Diese gibt an, welchen Platz der Kanal im Mixer (F9) belegen soll, um dort weiter mit Effekten wie Reverb etc. bearbeitet zu werden. Da wir nur mit MIDI arbeiten, kann sowohl dieses Zahlenfeld, als auch der Mixer ignoriert werden. \\
 Mit einem Linksklick auf einen Kanal öffnen wir diesen. Je nachdem, was sich dort befindet, öffnen sich entweder der Plugin Editor oder die Sample bzw. Instrument Settings. Mit einem Klick auf den kleinen Pfeil in der oberen linken Ecke öffnet sich ein Menü, worüber man bei Plugins  beispielsweise Presets (also Voreinstellungen) laden kann. (Im Falle von MIDI OUT können so voreingestellt CC's (Continuous Controller) von Synthesizern geladen werden. Wie man MIDI Controller auch selbst anlegt wird später erklärt.) \\
 Klicken wir neben den kleinen Pfeil auf das Zahnradsymbol, öffnet sich eine weitere Leiste. Dort befinden sich neben dem grünen Mute Knopf, dem Panning und Volume Regler noch ein Pitch Regler (den wir u.a. für Pitch Slides ausnutzen können).
 
@@ -223,13 +223,13 @@ Die Port Nummer muss die gleiche wie in Abbildung \ref{MIDIPort} sein, ansonsten
 \end{figure}
 
 Unten befindet sich ein Bereich mit 9 Reglern. Diese sind zunächst ohne Funktion, können von uns aber mit Controllern belegt werden. Dafür muss man mit einem Rechsklick auf das kleine Zahnrad neben dem Regler klicken um die Control Settings zu öffnen. \\
-Hier kann man jedem Regler einen Namen und Funktion zuordnen. Wir benutzen Continuous Controller (CC) die je nach Nummer eine andere Funktion abdecken. Eine vollständige Liste der CC Nummern gibt es unter \href{https://nickfever.com/Music/midi-cc-list}{https://nickfever.com/Music/midi-cc-list} \\
+Hier kann man jedem Regler einen Namen und Funktion zuordnen. Wir benutzen Continuous Controller (CC) die je nach Nummer eine andere Funktion abdecken. Eine vollständige Liste der CC Nummern gibt es unter: \\ \href{https://nickfever.com/Music/midi-cc-list}{https://nickfever.com/Music/midi-cc-list} \\
 CC Nummer 1 ist beispielsweise ein Controller für Vibrato. Die Range bestimmt einen Wertebereich, den man i.d.R. bei 0 bis 127 lassen sollte. \\
 Die Letzte Channel Angabe bestimmt, welche Kanäle man mit genau diesem Regler ansteuern möchte.
 
 \bigskip
 
-An dieser Stelle sei gesagt, dass nicht alle CC's über MIDI Out selbst funktionieren (generell unterstützt nicht jedes Plugin oder Synthesizer alle Controller). Außerdem werden die Controller nicht mit in den MML Code konvertiert, sie sind aber dennoch nützlich als Referenz.
+An dieser Stelle sei gesagt, dass nicht alle CC's über MIDI Out selbst funktionieren (generell unterstützt nicht jedes Plugin oder Synthesizer alle Controller). Außerdem werden die Controller nicht mit in den MML Code konvertiert, sie sind aber dennoch hilfreich als Referenz.
 
 \bigskip
 
