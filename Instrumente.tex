@@ -336,7 +336,7 @@ Sie befinden sich in \textit{samples/default/} bzw. \textit{samples/optimized/}.
 
 Sofern kein \#samples\{\} Block verwendet wird, setzt AddMusicK versteckt die Sample Group \#default. Sobald \#samples\{\} benutzt wird, muss eine Sample Group gesetzt werden.
 Ohne Sample Group wird nur das Standardinstrument @0 geladen, alle anderen SMW Samples können dann nicht mehr verwendet werden. \\
-In eine Rom gepatcht hat dies außerdem zur Folge, dass weder Global Songs noch Soundeffekte richtig abgespielt werden. Das liegt daran, dass jeder Soundeffekt in SMW aus den gleichen Samples erzeugt werden, die auch für die Musikinstrumente benutzt werden.
+In eine Rom gepatcht hat dies außerdem zur Folge, dass weder Global Songs noch Soundeffekte richtig abgespielt werden. Das liegt daran, dass jeder Soundeffekt in SMW aus den gleichen Samples erzeugt wird, die auch für die Musikinstrumente benutzt werden.
 Stattdessen werden Custom Samples die im \#samples\{\} Block liegen verwendet. Sobald ein sampled Song geschrieben wird, muss also eine Sample Group gesetzt werden.
 
 \bigskip
@@ -346,7 +346,7 @@ Der Informationsverlust bedeutet eine geringere Soundqualität, diese ist aber k
 
 \subsubsection*{Custom Sample Groups}
 
-Es ist auch möglich eine eigene Sample Group anzulegen. Hauptmotivation ist, etwas Arbeitsspeicher einzusparen, indem einzelne Samples aus der Sample Group durch die Datei \textit{EMPTY.brr} ersetzt werden. Dabei handelt es sich um ein Sample ohne Informationen und dient nur als Platzhalter, damit alle anderen Samples ihre richtige Position in der Liste beibehalten.
+Es ist auch möglich\underline{} eine eigene Sample Group anzulegen. Hauptmotivation ist, etwas Arbeitsspeicher einzusparen, indem einzelne Samples aus der Sample Group durch die Datei \textit{EMPTY.brr} ersetzt werden. Dabei handelt es sich um ein Sample ohne Informationen und dient nur als Platzhalter, damit alle anderen Samples ihre richtige Position in der Liste beibehalten.
 
 \bigskip
 
@@ -359,6 +359,19 @@ Die populärsten Samples die durch \textit{EMPTY.brr} ersetzt werden sind \texti
 \bigskip
 
 Falls eine neue Sample Group angelegt werden soll, kopiert man dafür am einfachsten die Sample Group \#optimized aus \textit{Addmusic\_sample groups.txt}, fügt diese im Textdokument ein mit einem anderen Namen als optimized und ersetzt Samples, die nicht verwendet werden sollen durch \textit{\dq EMPTY.brr\dq{}!}. Im Song selbst wird die Sample Group schließlich mit \#SampleGroupName geladen.
+
+\bigskip
+
+Alternativ kann auch direkt im Song selbst die Sample Group eingestellt werden, indem wir nicht die Sample Group als ganzes, sondern jedes Sample einzeln einladen und ggf. durch EMPTY.brr ersetzen. Dies hat den Vorteil, dass der Endbenutzer keine Custom Sample Group selbst eintragen muss. Beispiel:
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left]{codes/Samplegroup.txt}
+
+\medskip
+
+Mit .. gelangen wir in das übergeordnete Verzeichnis (von Prelude also der Ordner Samples). In diesem Beispiel wird anstatt \#optimized alle Samples aus \#optimized einzeln geladen mit Ausnahme von \textit{09 SMW @7.brr}. Alle anderen custom Samples können wie gewohnt geladen werden (z.B. \textit{harp 2.brr}).
+
 
 \subsection{Eigene Samples erstellen}
 
