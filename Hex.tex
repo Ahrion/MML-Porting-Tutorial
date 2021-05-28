@@ -455,3 +455,57 @@ Legato lässt Töne ohne Unterbrechungen abspielen.
 
 Mit Legato findet kein Rekeying (erneutes Anschlagen) von Samples statt, weswegen diese dann nur bei der ersten gespielten Note von Anfang an spielen.
 
+
+\subsubsection{Tune Channel}
+
+Der Pitch eines einzelnen Kanals kann gestimmt werden. Kann unter anderem dafür benutzt werden, um konstruktive Interferenzen (Überlagerungen) zu verringern.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=39, lastline=39]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Fine Pitch \$XX
+\end{itemize}
+
+wobei \$FF fast einen gesamten Halbton entspricht.
+
+\subsubsection{Semitone Tune}
+
+Ein einzelner Kanal kann in Halbtonschritten transponiert (verschoben) werden.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=41, lastline=41]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Halbtonschritt \$XX
+\end{itemize}
+
+Von \$80 abwärts geht man Halbtonschritte auf der Tonleiter nach unten. Falls der minimale bzw. maximale Pitch unterschritten / überschritten wird, läuft der Pitch über.
+
+\subsubsection{Global Transpose}
+
+Der gesamte Song kann in Halbtonschritten transponiert (verschoben) werden.
+
+\medskip
+
+\lstinputlisting[framexleftmargin=8mm, frame=shadowbox, rulesepcolor=\color{blue}, numbers=left, firstline=43, lastline=43]{codes/Hex.txt}
+
+\medskip
+
+mit
+
+\begin{itemize}
+	\item Halbtonschritt \$XX
+\end{itemize}
+
+Von \$80 abwärts geht man Halbtonschritte auf der Tonleiter nach unten. Falls der minimale bzw. maximale Pitch unterschritten / überschritten wird, läuft der Pitch über.

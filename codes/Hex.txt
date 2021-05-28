@@ -35,3 +35,9 @@ $FA $03 $XX
 $E5 $XX $YY $ZZ
 ; Legato
 $F4 $01
+; Tune Channel
+$EE $XX
+; Semitone Tune
+$FA $02 $XX
+; Global Transpose
+$E4 $XX
