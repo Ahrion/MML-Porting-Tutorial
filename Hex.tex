@@ -287,7 +287,7 @@ und erreicht das vorher definierte Vibrato Verhalten nach einer Viertelnote.
 
 \subsubsection{ADSR / Gain einstellen}
 
-ADSR kann während der Laufzeit verändert werden.
+ADSR kann während der Laufzeit verändert werden. Eine Ausnahme bilden die SMW Percussion Instrumente @21 - @29. Diese können nur über \#instruments\{\} geändert werden.
 
 \medskip
 
@@ -370,7 +370,7 @@ mit
 
 Beide Befehle treten immer zusammen auf. \\
 
-\$XX muss zwischen \$01 und \$0F liegen, bei \$00 ist Echo deaktiviert. Hierbei ist aber aufzupassen, da der Echo Delay Wert maßgeblich den Ram Speicher beeinträchtigt. Die Echo Size kann berechnet werden, indem man den \$XX Wert mit 2kB multipliziert. \$0F Echo Delay nimmt also 30kB Platz ein, was knapp die Hälfte des gesamten Audio RAMs entspricht.
+\$XX muss zwischen \$01 und \$0F liegen, bei \$00 ist Echo deaktiviert. Hierbei ist aber aufzupassen, da der Echo Delay Wert maßgeblich den Arbeitsspeicher beeinträchtigt. Die Echo Size kann berechnet werden, indem man den \$XX Wert mit 2kB multipliziert. \$0F Echo Delay nimmt also 30kB Platz ein, was knapp die Hälfte des gesamten Audio RAMs entspricht.
 
 \bigskip
 
